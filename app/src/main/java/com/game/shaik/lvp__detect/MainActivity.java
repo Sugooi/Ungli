@@ -14,8 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.game.shaik.lvp__detect.utility.API;
 import com.game.shaik.lvp__detect.utility.HScoreDialogClass;
+import com.game.shaik.lvp__detect.utility.MenuDialogClass;
 import com.game.shaik.lvp__detect.utility.OptionsDialogClass;
 import com.game.shaik.lvp__detect.utility.ScoreDialogClass;
 
@@ -39,11 +42,12 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements OptionsDialogClass.ExampleDialogListener {
+public class MainActivity extends AppCompatActivity implements OptionsDialogClass.OptionsDialogListener,MenuDialogClass.menuDialogListener {
     Button screen;
     TextView score,tap;
     int clicks=0;
     private long mEndTime;
+    ImageView menu;
 
     Button play,highscore,option,logout;
 
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
         logout=findViewById(R.id.logout);
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
         logout = findViewById(R.id.logout);
+        menu=findViewById(R.id.menu);
 
         SharedPreferences preferences = getSharedPreferences("default", MODE_PRIVATE);
         START_TIME_IN_MILLIS= preferences.getInt("timer",6000);
@@ -126,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
 
                 SharedPreferences.Editor editor = getSharedPreferences("default", MODE_PRIVATE).edit();
                 editor.putBoolean("isLoggedIn", false);
@@ -179,8 +184,21 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
                 highscore.setVisibility(View.GONE);
                 option.setVisibility(View.GONE);
                 logout.setVisibility(View.GONE);
+                menu.setVisibility(View.VISIBLE);
 
 
+            }
+        });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MenuDialogClass cdd=new MenuDialogClass(MainActivity.this);
+
+                cdd.show();
+                cdd.setCanceledOnTouchOutside(false);
+
+                pauseTimer();
 
             }
         });
@@ -191,9 +209,11 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
     }
 
 
+
+
     private void startTimer() {
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 100) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis = millisUntilFinished;
@@ -213,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
                 logout.setVisibility(View.VISIBLE);
                 screen.setVisibility(View.GONE);
 
-
+                menu.setVisibility(View.GONE);
 
 
                 SharedPreferences preferences = getSharedPreferences("default", MODE_PRIVATE);
@@ -252,6 +272,8 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
         mTimerRunning = false;
 
     }
+
+
 
     private void resetTimer() {
         mTimeLeftInMillis = START_TIME_IN_MILLIS;
@@ -380,7 +402,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
 
 
 
-                            Toast.makeText(getApplicationContext(),hs+"",Toast.LENGTH_LONG).show();
+                      //      Toast.makeText(getApplicationContext(),hs+"",Toast.LENGTH_LONG).show();
 
                         }catch (Exception e){
                             Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
@@ -413,4 +435,9 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
 
     }
 
+    //after resuming from menu
+    @Override
+    public void resume() {
+            startTimer();
+    }
 }

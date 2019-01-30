@@ -27,7 +27,7 @@ public class OptionsDialogClass extends Dialog implements
         android.view.View.OnClickListener {
 
     public Activity c;
-    private ExampleDialogListener listener;
+    private OptionsDialogListener listener;
 
     EditText minutes,sec;
     Button set;
@@ -51,7 +51,7 @@ public class OptionsDialogClass extends Dialog implements
 
 
         try {
-            listener = (ExampleDialogListener) c;
+            listener = (OptionsDialogListener) c;
         } catch (ClassCastException e) {
             throw new ClassCastException(c.toString() +
                     "must implement ExampleDialogListener");
@@ -121,7 +121,7 @@ public class OptionsDialogClass extends Dialog implements
     }
 
 
-    public interface ExampleDialogListener {
+    public interface OptionsDialogListener {
         void putTimer(int timer);
     }
 

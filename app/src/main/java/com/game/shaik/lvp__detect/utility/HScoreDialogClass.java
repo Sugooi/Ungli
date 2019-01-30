@@ -24,6 +24,8 @@ public class HScoreDialogClass extends Dialog implements
     TextView hscore;
 
 
+
+
     public HScoreDialogClass(Activity a) {
         super(a);
 
