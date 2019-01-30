@@ -107,6 +107,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:textColor="#fff"
+            android:id="@+id/tologin"
             android:text="Already a User? Click here to login"
             android:layout_alignParentBottom="true"
             android:layout_margin="10dp"

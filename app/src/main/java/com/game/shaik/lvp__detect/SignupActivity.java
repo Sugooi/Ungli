@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -38,6 +39,7 @@ public class SignupActivity extends AppCompatActivity {
     EditText email,pw,cpw,name;
     String username_r,email_r;
     Button signup;
+    TextView tologin;
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
@@ -52,6 +54,14 @@ public class SignupActivity extends AppCompatActivity {
         name=findViewById(R.id.sname);
         cpw=findViewById(R.id.scpass);
         signup=findViewById(R.id.signup);
+        tologin=findViewById(R.id.tologin);
+
+        tologin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SignupActivity.this,LoginActivity.class));
+            }
+        });
 
 
         signup.setOnClickListener(new View.OnClickListener() {
