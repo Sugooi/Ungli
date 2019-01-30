@@ -57,6 +57,7 @@ public class SignupActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //send post request to register the user
                 performreq(API.signup);
             }
         });
@@ -127,6 +128,7 @@ public class SignupActivity extends AppCompatActivity {
                           Toast.makeText(SignupActivity.this,response,Toast.LENGTH_LONG).show();
                         try {
                             JSONObject obj = new JSONObject(response);
+                            //if response says error:false then execute if block
                             if (!obj.getBoolean("error")) {
 
 
@@ -134,12 +136,10 @@ public class SignupActivity extends AppCompatActivity {
 
                                 id = userJson.getInt("id");
                                 username_r = userJson.getString("username");
-                          //      email_r = userJson.getString("email");
-
-                           //     Toast.makeText(getApplicationContext(),"Welcome back, " +username_r, Toast.LENGTH_SHORT).show();
 
 
 
+                                //reset the preference of highscore to 0
                                 SharedPreferences.Editor editor = getSharedPreferences("default", MODE_PRIVATE).edit();
                                 editor.putInt("highscore", 0);
                                 editor.commit();
@@ -150,10 +150,9 @@ public class SignupActivity extends AppCompatActivity {
 
 
                                 Intent intent = new Intent(SignupActivity.this,MainActivity.class);
-                                intent.putExtra("from","signup");
                                 startActivity(intent);
                             } else {
-                              //  Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
+                               Toast.makeText(getApplicationContext(), "Error signing up", Toast.LENGTH_SHORT).show();
                             }
                         }catch (Exception e){
 
@@ -169,6 +168,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
+                //post parameters
                 params.put("email",email1);
                 params.put("password",password);
                 params.put("username",username);

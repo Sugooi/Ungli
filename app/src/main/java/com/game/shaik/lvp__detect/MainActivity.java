@@ -86,10 +86,11 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
         mTimeLeftInMillis=START_TIME_IN_MILLIS;
 
 
-        performreq2(API.getHighscore);
-
+        //update the count down text based on timer in preferences
         updateCountDownText();
 
+
+        //handle highscore button clicks
         highscore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,17 +100,23 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
         });
 
 
-
+        //Check for internet conectivity
         if(!isNetworkAvailable())
         {
             Toast.makeText(MainActivity.this,"Please connect to the internet and try again.",Toast.LENGTH_SHORT).show();
             finish();
         }
 
+        //get Highscore of the User from the server
+        performreq2(API.getHighscore);
 
+
+        //handle option button
         option.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //display the set timer dialog box
                 OptionsDialogClass cdd=new OptionsDialogClass(MainActivity.this);
 
                 cdd.show();
@@ -121,13 +128,13 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
         });
 
 
-
+        //set the preference to logged in
         SharedPreferences.Editor editor = getSharedPreferences("default", MODE_PRIVATE).edit();
         editor.putBoolean("isLoggedIn", true);
         editor.commit();
 
 
-
+        //handle log out
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,6 +197,8 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
             }
         });
 
+
+        //menu or pause button while tapping
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -203,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
             }
         });
 
+        //updating the timer
         updateCountDownText();
 
 
@@ -210,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
 
 
 
-
+    //method to start timer
     private void startTimer() {
         mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 100) {
@@ -267,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
 
     }
 
+    //method to pause timer
     private void pauseTimer() {
         mCountDownTimer.cancel();
         mTimerRunning = false;
@@ -274,13 +285,13 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
     }
 
 
-
+    //method for resetting the timer for future purposes
     private void resetTimer() {
         mTimeLeftInMillis = START_TIME_IN_MILLIS;
         updateCountDownText();
 
     }
-
+    //keep updating the timer
     private void updateCountDownText() {
         int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
         int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
@@ -289,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
         mTextViewCountDown.setText(timeLeftFormatted);
     }
 
-
+    //method to check network availability
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -297,6 +308,8 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
+
+    //from optionsdialog box to set the timer from dialog box
     @Override
     public void putTimer(int timer) {
       START_TIME_IN_MILLIS=timer;
@@ -305,6 +318,8 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
 
     }
 
+
+    //handle double back pressed continuously
     int doubleBackToExitPressed = 1;
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -326,6 +341,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
         }, 2000);
     }
 
+    //volley request to server to update highscore on server for this user
     public void performreq(final String url) {
 
 
@@ -377,7 +393,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
 
     }
 
-
+    //volley request to get the highscore of the user when logged in
     public void performreq2(final String url) {
 
 
@@ -435,7 +451,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
 
     }
 
-    //after resuming from menu
+    //after resuming from menu. from interface
     @Override
     public void resume() {
             startTimer();
