@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.game.shaik.lvp__detect.MainActivity">
+
+
+    <ImageView
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@android:drawable/ic_media_pause" />
+
+
+
+
+    <Button
+        android:id="@+id/screen"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:background="@drawable/btn_ripple_effect"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:background="@drawable/ic_stopwatch"
+        android:text="00:00"
+        android:textColor="#fff"
+        android:id="@+id/text_view_countdown"
+        android:textSize="38sp"
+        android:textAlignment="center"
+        android:paddingTop="32dp"
+        android:layout_gravity="end"
+        android:layout_margin="10dp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:id="@+id/dashboard"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/button_blue"
+            android:id="@+id/play"
+            android:textColor="#fff"
+
+            android:text="Play" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:id="@+id/highscore"
+            android:background="@drawable/button_blue"
+
+            android:textColor="#fff"
+            android:text="High Score" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:textColor="#fff"
+            android:background="@drawable/button_blue"
+
+            android:id="@+id/options"
+            android:text="Options" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/logout"
+            android:textColor="#fff"
+            android:background="@drawable/button_blue"
+
+            android:layout_gravity="center"
+            android:text="Logout" />
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Score:"
+        android:id="@+id/score"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="TAP"
+        android:id="@+id/TAP"
+        android:textAlignment="center"
+        android:textSize="100sp"
+        android:visibility="invisible" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="PAUSED"
+        android:id="@+id/PAUSE"
+        android:textAlignment="center"
+        android:textSize="100sp"
+        android:visibility="invisible" />
+
+</FrameLayout>
