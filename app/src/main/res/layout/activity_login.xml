@@ -43,7 +43,6 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:padding="16dp"
                 android:drawablePadding="16dp"
                 android:textColor="#fff"
@@ -59,7 +58,6 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:padding="16dp"
                 android:hint="password"
                 android:textColor="#fff"
@@ -96,6 +94,7 @@
                 android:textColor="#fff"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
+                android:id="@+id/tosign"
                 />
         </RelativeLayout>
 

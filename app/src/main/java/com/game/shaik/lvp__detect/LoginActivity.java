@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     String email_in,pass_in;
     ProgressBar progressBar;
+    TextView toSign;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,6 +57,14 @@ public class LoginActivity extends AppCompatActivity {
         pw=findViewById(R.id.editText_password);
         login=findViewById(R.id.login);
         progressBar=findViewById(R.id.progressBar);
+        toSign=findViewById(R.id.tosign);
+
+        toSign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent( LoginActivity.this, SignupActivity.class));
+            }
+        });
 
         if(!isNetworkAvailable())
         {
@@ -117,6 +127,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                     SharedPreferences.Editor editor = getSharedPreferences("default", MODE_PRIVATE).edit();
                                     editor.putBoolean("isLoggedIn", true);
+                                    editor.putInt("highscore",Integer.parseInt(highscore));
+                                    editor.putInt("id",id);
                                     editor.commit();
 
 

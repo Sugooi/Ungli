@@ -36,7 +36,7 @@
         android:maxLines="1"
         android:inputType="textPersonName"
         android:background="@drawable/bkgrd_redlogin1"
-        android:id="@+id/editText_emailAddress"
+        android:id="@+id/sname"
         android:layout_marginTop="32dp"
       />
 
@@ -51,7 +51,7 @@
             android:maxLines="1"
             android:inputType="textEmailAddress"
             android:background="@drawable/bkgrd_redlogin1"
-            android:id="@+id/editText_emailAddress"
+            android:id="@+id/semail"
             android:layout_marginTop="16dp"
             />
 
@@ -67,7 +67,7 @@
             android:maxLines="1"
             android:inputType="textPassword"
             android:background="@drawable/bkgrd_redlogin1"
-            android:id="@+id/editText_emailAddress"
+            android:id="@+id/spass"
             android:layout_marginTop="16dp"
             />
 
@@ -82,7 +82,7 @@
             android:maxLines="1"
             android:inputType="textPassword"
             android:background="@drawable/bkgrd_redlogin1"
-            android:id="@+id/editText_emailAddress"
+            android:id="@+id/scpass"
             android:layout_marginTop="16dp"
             />
 
@@ -93,6 +93,7 @@
             android:clickable="true"
             android:textColor="#34495e"
             android:padding="16dp"
+            android:id="@+id/signup"
             android:textSize="18sp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
@@ -101,21 +102,31 @@
             android:background="@drawable/bkgd_red_2"/>
 
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            android:text="Already a User? Click here to login"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="10dp"
+            />
+
 
     </LinearLayout>
 
 </ScrollView>
 
 
-    <TextView
-        android:layout_width="match_parent"
+    <ProgressBar
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textColor="#fff"
-        android:text="Already a User? Click here to login"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:id="@+id/sprogressBar"
         />
+
+
 
 
 

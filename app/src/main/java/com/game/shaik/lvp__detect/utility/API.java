@@ -5,7 +5,10 @@ package com.game.shaik.lvp__detect.utility;
  */
 
 public class API {
-    public static String base_url="https://skilltern.in/rnd/tap_register.php";
-    public static String login = base_url+"?apicall=login";
-    public static String signup = base_url+"?apicall=signup";
+    public static String base_url="https://skilltern.in/rnd/";
+    public static String login = base_url+"tap_register.php?apicall=login";
+    public static String signup = base_url+"tap_register.php?apicall=signup";
+    public static String setHighscore = base_url+"updateHS.php";
+    public static String getHighscore =base_url+"getHS.php";
+
 }

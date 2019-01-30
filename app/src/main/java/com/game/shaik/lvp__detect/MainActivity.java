@@ -12,16 +12,30 @@ import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.game.shaik.lvp__detect.utility.API;
 import com.game.shaik.lvp__detect.utility.HScoreDialogClass;
 import com.game.shaik.lvp__detect.utility.OptionsDialogClass;
 import com.game.shaik.lvp__detect.utility.ScoreDialogClass;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -66,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
         START_TIME_IN_MILLIS= preferences.getInt("timer",6000);
         mTimeLeftInMillis=START_TIME_IN_MILLIS;
 
+
+        performreq2(API.getHighscore);
 
         updateCountDownText();
 
@@ -115,6 +131,10 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
                 SharedPreferences.Editor editor = getSharedPreferences("default", MODE_PRIVATE).edit();
                 editor.putBoolean("isLoggedIn", false);
                 editor.commit();
+
+                SharedPreferences preferences = getSharedPreferences("default", MODE_PRIVATE);
+                hs= preferences.getInt("highscore",0);
+
 
             }
         });
@@ -205,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
                     SharedPreferences.Editor editor = getSharedPreferences("default", MODE_PRIVATE).edit();
                     editor.putInt("highscore", clicks);
                     editor.commit();
-
+                    performreq(API.setHighscore);
                     hs=clicks;
                 }
 
@@ -283,4 +303,114 @@ public class MainActivity extends AppCompatActivity implements OptionsDialogClas
             }
         }, 2000);
     }
+
+    public void performreq(final String url) {
+
+
+        SharedPreferences preferences = getSharedPreferences("default", MODE_PRIVATE);
+        final int id= preferences.getInt("id",0);
+        final int hs=preferences.getInt("highscore",0);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        //  Toast.makeText(LoginActivity.this,response,Toast.LENGTH_LONG).show();
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            if (!obj.getBoolean("error")) {
+
+
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Not able to upload highscore to server.", Toast.LENGTH_SHORT).show();
+                            }
+                        }catch (Exception e){
+
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("id",id+"");
+                params.put("highscore",hs+"");
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+
+
+
+
+
+    }
+
+
+    public void performreq2(final String url) {
+
+
+        SharedPreferences preferences = getSharedPreferences("default", MODE_PRIVATE);
+        final int id= preferences.getInt("id",0);
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+                        try {
+                            JSONArray arr = new JSONArray(response);
+
+                            JSONObject obj = arr.getJSONObject(0);
+                             int hs= obj.getInt("highscore");
+
+                            SharedPreferences.Editor editor = getSharedPreferences("default", MODE_PRIVATE).edit();
+                            editor.putInt("highscore", hs);
+                            editor.commit();
+
+
+
+                            Toast.makeText(getApplicationContext(),hs+"",Toast.LENGTH_LONG).show();
+
+                        }catch (Exception e){
+                            Toast.makeText(getApplicationContext(),e.toString(),Toast.LENGTH_LONG).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("id",id+"");
+
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
+
+
+
+
+
+    }
+
 }
